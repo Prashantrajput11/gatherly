@@ -1,14 +1,14 @@
-import { View, Platform, SafeAreaView } from "react-native";
-import { useLinkBuilder, useTheme } from "@react-navigation/native";
-import { Text, PlatformPressable } from "@react-navigation/elements";
-import tw from "twrnc";
+// src/navigation/BottomTab.js
+import React from "react";
+import { View, SafeAreaView, TouchableOpacity } from "react-native";
+import { Text } from "react-native-paper";
 import { Feather } from "@expo/vector-icons";
+import tw from "twrnc";
+import { useTheme } from "@react-navigation/native";
 
-export function BottomTab({ state, descriptors, navigation }) {
+export default function BottomTab({ state, descriptors, navigation }) {
 	const { colors } = useTheme();
-	const { buildHref } = useLinkBuilder();
 
-	// Icon mapping for tab items
 	const getTabIcon = (routeName) => {
 		switch (routeName) {
 			case "Home":
@@ -21,8 +21,8 @@ export function BottomTab({ state, descriptors, navigation }) {
 	};
 
 	return (
-		<SafeAreaView style={tw`bg-white`}>
-			<View style={tw`flex-row bg-white border-t border-gray-200  pt-2`}>
+		<SafeAreaView style={tw`bg-white`} edges={["left", "right", "top"]}>
+			<View style={tw`flex-row border-t border-gray-200 pt-2 h-16`}>
 				{state.routes.map((route, index) => {
 					const { options } = descriptors[route.key];
 					const label =
@@ -54,9 +54,8 @@ export function BottomTab({ state, descriptors, navigation }) {
 					};
 
 					return (
-						<PlatformPressable
+						<TouchableOpacity
 							key={route.key}
-							href={buildHref(route.name, route.params)}
 							accessibilityState={isFocused ? { selected: true } : {}}
 							accessibilityLabel={options.tabBarAccessibilityLabel}
 							testID={options.tabBarButtonTestID}
@@ -77,7 +76,7 @@ export function BottomTab({ state, descriptors, navigation }) {
 							>
 								{label}
 							</Text>
-						</PlatformPressable>
+						</TouchableOpacity>
 					);
 				})}
 			</View>
