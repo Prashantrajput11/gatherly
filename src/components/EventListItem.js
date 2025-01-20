@@ -4,8 +4,14 @@ import dayjs from "dayjs";
 import { Feather } from "@expo/vector-icons";
 import tw from "twrnc";
 import { supabase } from "../utils/supabase";
+import {
+	createStaticNavigation,
+	useNavigation,
+} from "@react-navigation/native";
 
 export default function EventListItem({ eventData }) {
+	const navigaton = useNavigation();
+	useNavigation();
 	const [peopleCount, setPeopleCount] = useState(0);
 	const { title, location, datetime, image, id, dist_meters } = eventData;
 
@@ -26,7 +32,7 @@ export default function EventListItem({ eventData }) {
 	return (
 		<Pressable
 			style={tw`bg-white rounded-2xl mx-4 my-2 shadow-lg`}
-			onPress={() => {}}
+			onPress={() => navigaton.navigate("Details", { eventData })}
 		>
 			{/* Image Section */}
 			<Image source={{ uri: image }} style={tw`w-full h-48 rounded-t-2xl`} />

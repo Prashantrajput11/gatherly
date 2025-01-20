@@ -5,23 +5,34 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { PaperProvider } from "react-native-paper";
 import Home from "./src/screens/Home";
 import EventDetails from "./src/screens/EventDetails";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Profile from "./src/screens/Profile";
+import { BottomTab } from "./src/navigation/BottomTab";
 
-function HomeScreen() {
-	return (
-		<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-			<Text>Home Screen</Text>
-		</View>
-	);
-}
+const MyTabs = createBottomTabNavigator({
+	tabBar: (props) => <BottomTab {...props} />,
+	screens: {
+		Home: {
+			screen: Home,
+			options: {
+				headerShown: false,
+				title: "Overview",
+			},
+		},
+		Profile: Profile,
+	},
+});
 
 const RootStack = createNativeStackNavigator({
-	screenOptions: {
-		headerShown: false,
-		// headerStyle: { backgroundColor: 'tomato' },
-	},
 	screens: {
-		Home: Home,
-		// Details: EventDetails,
+		Home: {
+			screen: MyTabs,
+			options: {
+				headerShown: false,
+				title: "Overview",
+			},
+		},
+		Details: EventDetails,
 	},
 });
 

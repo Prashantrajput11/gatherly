@@ -14,7 +14,8 @@ import tw from "twrnc";
 // import { useAuth } from "~/contexts/AuthProvider";
 import { supabase } from "../utils/supabase";
 
-const EventDetails = () => {
+const EventDetails = ({ route }) => {
+	const { eventData } = route.params;
 	const [event, setEvent] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [attendance, setAttendance] = useState(null);
@@ -75,21 +76,21 @@ const EventDetails = () => {
 	return (
 		<View style={tw`flex-1 bg-white p-4`}>
 			<Image
-				source={{ uri: event.image_uri }}
+				source={{ uri: eventData.image }}
 				style={tw`w-full aspect-video rounded-xl`}
 			/>
 
 			<View style={tw`mt-4`}>
 				<Text style={tw`text-lg font-semibold text-amber-600 uppercase`}>
-					{dayjs(event.datetime).format("ddd, MMM D,  h:mm A")}
+					{dayjs(eventData.datetime).format("ddd, MMM D,  h:mm A")}
 				</Text>
 
 				<Text style={tw`text-3xl font-bold mt-2`} numberOfLines={3}>
-					{event.title}
+					{eventData.title}
 				</Text>
 
 				<Text style={tw`text-lg mt-2 text-gray-700`} numberOfLines={3}>
-					{event.description}
+					{eventData.description}
 				</Text>
 
 				<Text
